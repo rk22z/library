@@ -59,6 +59,9 @@ cursor:text;
     ${type === 'price' && css`
     font-size:18px;
     `}
+    ${type === 'ISBN' && css`
+    font-size:18px;
+    `}
     ${type === 'available' && css`
     font-size:18px;
     font-weight: ${FONT_WEIGHT.bold};

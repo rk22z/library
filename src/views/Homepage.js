@@ -1,67 +1,38 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import * as Styled from './HomepageStyled'
 
 import BookCard from '../components/BookCard/BookCard'
 import Modal from '../components/Modal/Modal'
 import ModalContent from '../components/Modal/ModalContent/ModalContent'
-import { useSelector } from 'react-redux'
-import { books } from '../slices/adminSlice'
+import { useSelector, useDispatch } from 'react-redux'
+import { displayedBooks, book, modalType, isModalOpen, openModal, closeModal, selectBook, handleModalType } from '../slices/adminSlice'
+import { MODAL_TYPE } from '../constants/variables'
 
 const Homepage = () => {
 
-    const [isOpen, setIsOpen] = useState(false)
-    const [selectedBook, setSelectedBook] = useState(null)
+
+    const dispatch = useDispatch()
+    const isOpen = useSelector(isModalOpen)
+    const bookData = useSelector(book)
+    const booksList = useSelector(displayedBooks)
+    const type = useSelector(modalType)
+
+
 
     const handleOpen = (book) => {
-        setSelectedBook(book);
-        setIsOpen(true);
+        dispatch(handleModalType(MODAL_TYPE.book))
+        dispatch(selectBook(book))
+        dispatch(openModal())
     }
     const handleClose = () => {
-        setIsOpen(false);
+        dispatch(closeModal())
     }
 
-    // console.log('selbook', selectedBook)
 
-    const books1 = [
-        {
-            title: 'prima',
-            author: 'carte',
-            price: '3',
-            available: false,
-        },
-        {
-            title: 'prima',
-            author: 'carte',
-            price: '3',
-            available: false,
-        },
-        {
-            title: 'prima',
-            author: 'carte',
-            price: '3',
-            available: true,
-        },
-        {
-            title: 'prima',
-            author: 'carte',
-            price: '3',
-            available: false,
-        },
-        {
-            title: 'prima',
-            author: 'carte',
-            price: '3',
-            available: true,
-        },
-
-
-    ]
-
-    const booksList = useSelector(books)
 
     return (
         <Styled.HomepageContainer>
-            {booksList.map((book, index) => {
+            {booksList?.map((book, index) => {
                 return (
                     <Styled.BookWrapper key={index} onClick={() => handleOpen(book)}>
                         <BookCard title={book.title} author={book.author} price={book.price} available={book.available} ISBN={book.ISBN} />
@@ -69,7 +40,7 @@ const Homepage = () => {
             })}
 
             {isOpen && <Modal open={isOpen} handleClose={handleClose}>
-                <ModalContent content={selectedBook} type='book' />
+                <ModalContent content={bookData} type={type} />
             </Modal>}
         </Styled.HomepageContainer>
     )

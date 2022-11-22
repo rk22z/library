@@ -6,38 +6,29 @@ import logo from '../../assets/logo.svg';
 import Button from '../Button/Button';
 import Modal from '../Modal/Modal';
 import ModalContent from '../Modal/ModalContent/ModalContent';
-import { useDispatch } from 'react-redux';
-import { addBook } from '../../slices/adminSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { isModalOpen, openModal, closeModal, handleModalType, modalType } from '../../slices/adminSlice';
+import { MODAL_TYPE } from '../../constants/variables'
 
 
 const Header = () => {
 
-    const [isOpen, setIsOpen] = useState(false)
-    const [action, setAction] = useState('')
+    // const [isOpen, setIsOpen] = useState(false)
+    // const [action, setAction] = useState('')
 
     const dispatch = useDispatch()
-    const bk = {
-        id: 0,
-        title: 'mizerabilii',
-        author: 'alexandre dumas',
-        ISBN: 1257,
-        price: 12,
-        available: true,
-    }
-
+    const isOpen = useSelector(isModalOpen)
+    const type = useSelector(modalType)
 
     const handleOpen = (action) => {
-        // setSelectedBook(book);
-        setAction(action)
-        setIsOpen(true);
+        dispatch(handleModalType(action))
+        dispatch(openModal())
     }
     const handleClose = () => {
-        setIsOpen(false);
+        dispatch(closeModal())
     }
 
-    const handleAdd = () => {
-        dispatch(addBook(bk))
-    }
+
 
     return (
         <Styled.HeaderContainer>
@@ -52,11 +43,11 @@ const Header = () => {
                     <Button text='returneaza' btnStyle='darkButton' handleClick={() => handleOpen('return')} />
                 </Styled.ButtonWrapper>
                 <Styled.ButtonWrapper>
-                    <Button text='adauga carte' btnStyle='darkButton' handleClick={handleAdd} />
+                    <Button text='adauga carte' btnStyle='darkButton' handleClick={() => handleOpen('add')} />
                 </Styled.ButtonWrapper>
             </Styled.ButtonsContainer>
             {isOpen && <Modal open={isOpen} handleClose={handleClose}>
-                <ModalContent type={action} />
+                <ModalContent type={type} />
             </Modal>}
         </Styled.HeaderContainer>
     )

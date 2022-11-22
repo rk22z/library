@@ -19,3 +19,9 @@ export const FONT_WEIGHT = {
     bold: '700'
 };
 
+export const MODAL_TYPE = {
+    book: 'book',
+    add: 'add',
+    borrow: 'borrow',
+    return: 'return'
+}
