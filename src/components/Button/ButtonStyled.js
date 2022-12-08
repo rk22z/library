@@ -7,7 +7,7 @@ height: 100%;
 /* background-color: red; */
 `
 
-export const ButtonComponent = styled.button(({ btnStyle }) => css`
+export const ButtonComponent = styled.button(({ btnStyle, selected, disabled }) => css`
  width:100%;
  height: 100%;
  border:none;
@@ -19,14 +19,18 @@ export const ButtonComponent = styled.button(({ btnStyle }) => css`
     &:hover{
         cursor: pointer;
         background-color: ${COLORS.secondaryGray};
-        }  
+        }
+    ${selected && css`
+    background-color: ${COLORS.primaryGray};
+    transform:scaleX(1.05);
+    `}
 `}
  ${btnStyle === 'lightButton' && css`
     border-radius:45px;
-    background-color: ${COLORS.primaryBlue};
+    background-color: ${disabled ? COLORS.secondaryGray : COLORS.primaryBlue};
     &:hover{
-        cursor: pointer;
-        background-color: ${COLORS.secondaryBlue};
+        cursor: ${disabled ? 'default' : 'pointer'};
+        background-color: ${disabled ? COLORS.secondaryGray : COLORS.secondaryBlue};
         }
 `}
  ${btnStyle === 'darkButton' && css`

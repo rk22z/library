@@ -22,6 +22,7 @@ export const FONT_WEIGHT = {
 export const MODAL_TYPE = {
     book: 'book',
     add: 'add',
-    borrow: 'borrow',
-    return: 'return'
+    report: 'report',
 }
+
+export const DATE_FORMAT = "DD-MM-YYYY";

@@ -5,18 +5,29 @@ import BookCard from '../components/BookCard/BookCard'
 import Modal from '../components/Modal/Modal'
 import ModalContent from '../components/Modal/ModalContent/ModalContent'
 import { useSelector, useDispatch } from 'react-redux'
-import { displayedBooks, book, modalType, isModalOpen, openModal, closeModal, selectBook, handleModalType } from '../slices/adminSlice'
+import { selectedTab, books, isModalOpen, openModal, closeModal, selectBook, handleModalType } from '../slices/adminSlice'
 import { MODAL_TYPE } from '../constants/variables'
+import SearchBar from '../components/SearchBar/SearchBar'
+import { useMemo } from 'react'
 
 const Homepage = () => {
 
 
     const dispatch = useDispatch()
     const isOpen = useSelector(isModalOpen)
-    const bookData = useSelector(book)
-    const booksList = useSelector(displayedBooks)
-    const type = useSelector(modalType)
+    const booksList = useSelector(books)
+    const tab = useSelector(selectedTab)
+    const [searchResult, setSearchResult] = useState([])
 
+    useEffect(() => {
+        const closeOnKeyPress = (event) => {
+            if (event.key === 'Escape') {
+                handleClose()
+            }
+        }
+        window.addEventListener('keydown', closeOnKeyPress)
+        return () => window.removeEventListener('keydown', closeOnKeyPress)
+    }, [])
 
 
     const handleOpen = (book) => {
@@ -30,17 +41,44 @@ const Homepage = () => {
 
 
 
+    const filteredBook = (tab) => {
+
+        let filteredArray = []
+        switch (tab) {
+            case 'all':
+                filteredArray = [...booksList]
+                return filteredArray
+            case 'available':
+                filteredArray = booksList.filter((book) => book.available === true)
+                return filteredArray
+            case 'borrowed':
+                filteredArray = booksList.filter((book) => book.available === false)
+                return filteredArray
+            default:
+                break;
+        }
+
+        // return filteredArray
+    }
+
     return (
         <Styled.HomepageContainer>
-            {booksList?.map((book, index) => {
-                return (
-                    <Styled.BookWrapper key={index} onClick={() => handleOpen(book)}>
-                        <BookCard title={book.title} author={book.author} price={book.price} available={book.available} ISBN={book.ISBN} />
-                    </Styled.BookWrapper>)
-            })}
+            <Styled.HeaderContainer>
+                <Styled.Count>{filteredBook(tab).length > 0 && `Rezultate gasite: ${filteredBook(tab).length}`}</Styled.Count>
+                <Styled.SearchBar><SearchBar books={booksList} setSearchResult={setSearchResult} /></Styled.SearchBar>
+            </Styled.HeaderContainer>
+            <Styled.ContentContainer>
+                {filteredBook(tab)?.map((book, index) => {
+                    const { title, author, price, available, ISBN } = book
+                    return (
+                        <Styled.BookWrapper key={index} onClick={() => handleOpen(book)}>
+                            <BookCard title={title} author={author} price={price} available={available} ISBN={ISBN} />
+                        </Styled.BookWrapper>)
+                })}
+            </Styled.ContentContainer>
 
             {isOpen && <Modal open={isOpen} handleClose={handleClose}>
-                <ModalContent content={bookData} type={type} />
+                <ModalContent />
             </Modal>}
         </Styled.HomepageContainer>
     )

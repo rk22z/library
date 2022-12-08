@@ -1,17 +1,29 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import * as Styled from './AddBookFormStyled'
 import { useSelector, useDispatch } from 'react-redux'
 import { book, addBook, closeModal, books } from '../../../../slices/adminSlice'
+import Button from '../../../Button/Button'
 
 
-const AddBookForm = (props) => {
-    const { type = '' } = props;
-
+const AddBookForm = () => {
     const dispatch = useDispatch()
     const bookData = useSelector(book)
     const booksData = useSelector(books)
 
     const [data, setData] = useState(bookData)
+    const [disable, setDisable] = useState(true)
+
+    useEffect(() => {
+        if (data?.title.length > 0
+            && data?.author.length > 0
+            && data?.price.length > 0
+            // && data?.ISBN.length === 1
+        ) {
+            setDisable(false)
+        } else {
+            setDisable(true)
+        }
+    }, [data])
 
 
     const handleChange = (event) => {
@@ -25,26 +37,45 @@ const AddBookForm = (props) => {
         dispatch(addBook(data))
         dispatch(closeModal())
     }
-    // console.log('bksmodal', booksData)
+
     return (
         <Styled.AddFormContainer>
-            <Styled.AddFormInputWrapper content={type}>
-                <Styled.AddFormLabel content={type}>Book title</Styled.AddFormLabel>
-                <Styled.AddFormInput type='text' content={type} name='title' onChange={(event) => handleChange(event)} />
+            <Styled.AddFormInputWrapper >
+                <Styled.AddFormLabel >Titlu carte</Styled.AddFormLabel>
+                <Styled.AddFormInput
+                    type='text'
+                    name='title'
+                    onChange={(event) => handleChange(event)} />
             </Styled.AddFormInputWrapper>
-            <Styled.AddFormInputWrapper content={type}>
-                <Styled.AddFormLabel content={type}>Author</Styled.AddFormLabel>
-                <Styled.AddFormInput type='text' content={type} name='author' onChange={(event) => handleChange(event)} />
+            <Styled.AddFormInputWrapper >
+                <Styled.AddFormLabel >Autor</Styled.AddFormLabel>
+                <Styled.AddFormInput
+                    type='text'
+                    name='author'
+                    onChange={(event) => handleChange(event)} />
             </Styled.AddFormInputWrapper>
-            <Styled.AddFormInputWrapper content={type}>
-                <Styled.AddFormLabel content={type}>Price</Styled.AddFormLabel>
-                <Styled.AddFormInput type='number' content={type} name='price' onChange={(event) => handleChange(event)} />
+            <Styled.AddFormInputWrapper >
+                <Styled.AddFormLabel >Pret</Styled.AddFormLabel>
+                <Styled.AddFormInput
+                    type='number'
+                    name='price'
+                    onChange={(event) => handleChange(event)} />
             </Styled.AddFormInputWrapper>
-            <Styled.AddFormInputWrapper content={type}>
-                <Styled.AddFormLabel content={type}>ISBN</Styled.AddFormLabel>
-                <Styled.AddFormInput type='number' content={type} name='ISBN' onChange={(event) => handleChange(event)} />
+            <Styled.AddFormInputWrapper >
+                <Styled.AddFormLabel >ISBN</Styled.AddFormLabel>
+                <Styled.AddFormInput
+                    type='number'
+                    name='ISBN'
+                    onChange={(event) => handleChange(event)} />
             </Styled.AddFormInputWrapper>
-            <button onClick={() => handleAdd(data)}>adauga</button>
+            <Styled.ButtonWrapper>
+                <Button
+                    text='Adauga'
+                    btnStyle='lightButton'
+                    handleClick={() => handleAdd(data)}
+                    disabled={disable}
+                />
+            </Styled.ButtonWrapper>
         </Styled.AddFormContainer>
     )
 }

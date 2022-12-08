@@ -2,46 +2,55 @@ import React from 'react'
 
 import * as Styled from './SideMenuStyled'
 
-import { setDisplayedBooks, books, displayedBooks, resetDisplayedBooks } from '../../slices/adminSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Button from '../Button/Button'
+import { openModal, handleModalType, changeTab, selectedTab } from '../../slices/adminSlice';
+import { MODAL_TYPE } from '../../constants/variables'
 
 
 const SideMenu = () => {
 
     const dispatch = useDispatch()
-    const allBooks = useSelector(books)
-    const allDBooks = useSelector(displayedBooks)
+    const tab = useSelector(selectedTab)
 
-    const handleFilter = (status) => {
-        dispatch(setDisplayedBooks(status))
+    const handleFilter = (filter) => {
+        dispatch(changeTab(filter))
     }
 
-    const handleResetFilter = () => {
-        dispatch(resetDisplayedBooks())
+    const handleOpenReports = (type) => {
+        dispatch(handleModalType(type))
+        dispatch(openModal())
     }
 
 
-    const handleClick = () => { }
-
-    console.log('all books', allBooks)
-    console.log('all displayed books', allDBooks)
     return (
         <Styled.SideMenuContainer>
             <Styled.TabsContainer>
                 <Styled.TabWrapper>
-                    <Button text='carti disponibile' btnStyle='tab' handleClick={() => handleFilter(true)} />
+                    <Button text='carti disponibile'
+                        btnStyle='tab'
+                        selected={tab === 'available'}
+                        handleClick={() => handleFilter('available')} />
                 </Styled.TabWrapper>
                 <Styled.TabWrapper>
-                    <Button text='carti imprumutate' btnStyle='tab' handleClick={() => handleFilter(false)} />
+                    <Button text='carti imprumutate'
+                        btnStyle='tab'
+                        selected={tab === 'borrowed'}
+                        handleClick={() => handleFilter('borrowed')} />
                 </Styled.TabWrapper>
                 <Styled.TabWrapper>
-                    <Button text='toate cartile' btnStyle='tab' handleClick={handleResetFilter} />
+                    <Button text='toate cartile'
+                        btnStyle='tab'
+                        selected={tab === 'all'}
+                        handleClick={() => handleFilter('all')} />
                 </Styled.TabWrapper>
             </Styled.TabsContainer>
             <Styled.ButtonWrapper>
-                <Button text='raport carti' btnStyle='lightButton' handleClick={handleClick} />
+                <Button text='raport carti'
+                    btnStyle='lightButton'
+                    handleClick={() => handleOpenReports(MODAL_TYPE.report)}
+                    disabled={false} />
             </Styled.ButtonWrapper>
         </Styled.SideMenuContainer>
     )

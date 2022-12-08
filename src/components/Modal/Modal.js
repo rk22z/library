@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import * as Styled from './ModalStyled'
 
 const Modal = (props) => {
-    const { children, open = false, handleClose = () => { } } = props
+    const { children, handleClose = () => { } } = props
 
     return ReactDOM.createPortal(
         <Styled.ModalBackdrop onClick={handleClose}>

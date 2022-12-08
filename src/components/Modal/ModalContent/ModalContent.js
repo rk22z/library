@@ -2,53 +2,46 @@ import React from 'react'
 import AddBookForm from './AddBookForm/AddBookForm'
 
 import * as Styled from './ModalContentStyled'
-import { useDispatch } from 'react-redux'
-import { borrowBook } from '../../../slices/adminSlice'
+import { useSelector } from 'react-redux'
+import { modalType } from '../../../slices/adminSlice'
+import BookContent from './BookContent/BookContent'
+import ReportContent from './ReportContent/ReportContent'
+import { MODAL_TYPE } from '../../../constants/variables'
 
-const ModalContent = (props) => {
-    const { content, type } = props
+const ModalContent = () => {
 
-    const dispatch = useDispatch()
 
-    const handleBorrow = () => {
-        dispatch(borrowBook())
-    }
+    const type = useSelector(modalType)
+
+
 
     const renderModalContent = () => {
         switch (type) {
-            case 'book':
+            case MODAL_TYPE.book:
                 return (
-                    <div>
-                        {content?.title} {content?.author} {content?.available ? 'dispo' : 'indispo'}
-                        <button onClick={handleBorrow}>imprumuta</button>
-                    </div>
+                    <BookContent />
                 )
-            case 'borrow':
+
+            case MODAL_TYPE.add:
                 return (
-                    <div>
-                        {type}
-                    </div>)
-            case 'add':
-                return (
-                    <AddBookForm type={type} />
+                    <AddBookForm />
                 )
-            case 'return':
+
+            case MODAL_TYPE.report:
                 return (
-                    <div>
-                        {type}
-                    </div>)
+                    <ReportContent />
+                )
+
             default:
                 return (
-                    <div>
-                        No content to display
-                    </div>
+                    <Styled.NoContentText>
+                        A aparut o eroare, va rugam reincarcati pagina
+                    </Styled.NoContentText>
                 )
 
         }
     }
 
-    console.log('content', content)
-    console.log('type', type)
 
     return (
         <Styled.ModalContainer>
