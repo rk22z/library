@@ -18,6 +18,7 @@ import { MODAL_TYPE } from '../constants/variables'
 import BookCard from '../components/BookCard/BookCard'
 import Modal from '../components/Modal/Modal'
 import ModalContent from '../components/Modal/ModalContent/ModalContent'
+
 const Homepage = () => {
 
 
