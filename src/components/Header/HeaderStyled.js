@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { COLORS, FONT_FAMILY, FONT_WEIGHT } from '../../constants/variables'
 
 
 export const HeaderContainer = styled.div`

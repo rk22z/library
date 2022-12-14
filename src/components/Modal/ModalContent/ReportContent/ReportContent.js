@@ -13,15 +13,15 @@ const ReportContent = () => {
     return (
         <Styled.ReportContainer>
             <Styled.LineWrapper>
-                <Styled.Property>Carti totale: </Styled.Property>
+                <Styled.Property>Total number of books: </Styled.Property>
                 <Styled.Value>{booksData.length}</Styled.Value>
             </Styled.LineWrapper>
             <Styled.LineWrapper>
-                <Styled.Property>Carti disponibile: </Styled.Property>
+                <Styled.Property>Available books: </Styled.Property>
                 <Styled.Value>{availableBooks}</Styled.Value>
             </Styled.LineWrapper>
             <Styled.LineWrapper>
-                <Styled.Property>Carti imprumutate: </Styled.Property>
+                <Styled.Property>Borrowed books: </Styled.Property>
                 <Styled.Value>{borrowedBooks}</Styled.Value>
             </Styled.LineWrapper>
         </Styled.ReportContainer>

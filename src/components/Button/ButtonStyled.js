@@ -4,7 +4,6 @@ import { COLORS, FONT_FAMILY, FONT_WEIGHT } from '../../constants/variables'
 export const ButtonWrapper = styled.div`
 width:100%;
 height: 100%;
-/* background-color: red; */
 `
 
 export const ButtonComponent = styled.button(({ btnStyle, selected, disabled }) => css`

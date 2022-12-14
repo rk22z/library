@@ -3,10 +3,10 @@ import React from 'react'
 import * as Styled from './SideMenuStyled'
 
 import { useDispatch, useSelector } from 'react-redux'
-
-import Button from '../Button/Button'
 import { openModal, handleModalType, changeTab, selectedTab } from '../../slices/adminSlice';
 import { MODAL_TYPE } from '../../constants/variables'
+
+import Button from '../Button/Button'
 
 
 const SideMenu = () => {
@@ -28,26 +28,26 @@ const SideMenu = () => {
         <Styled.SideMenuContainer>
             <Styled.TabsContainer>
                 <Styled.TabWrapper>
-                    <Button text='carti disponibile'
+                    <Button text='Available books'
                         btnStyle='tab'
                         selected={tab === 'available'}
                         handleClick={() => handleFilter('available')} />
                 </Styled.TabWrapper>
                 <Styled.TabWrapper>
-                    <Button text='carti imprumutate'
+                    <Button text='Borrowed books'
                         btnStyle='tab'
                         selected={tab === 'borrowed'}
                         handleClick={() => handleFilter('borrowed')} />
                 </Styled.TabWrapper>
                 <Styled.TabWrapper>
-                    <Button text='toate cartile'
+                    <Button text='All books'
                         btnStyle='tab'
                         selected={tab === 'all'}
                         handleClick={() => handleFilter('all')} />
                 </Styled.TabWrapper>
             </Styled.TabsContainer>
             <Styled.ButtonWrapper>
-                <Button text='raport carti'
+                <Button text='Books situation'
                     btnStyle='lightButton'
                     handleClick={() => handleOpenReports(MODAL_TYPE.report)}
                     disabled={false} />

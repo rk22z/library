@@ -17,8 +17,8 @@ const BookCard = (props) => {
                 <Styled.BookCardText type='ISBN'>{ISBN}</Styled.BookCardText>
                 <Styled.BookCardText type='title'>{title}</Styled.BookCardText>
                 <Styled.BookCardText type='author'>{author}</Styled.BookCardText>
-                <Styled.BookCardText type='price'>{price}RON/zi</Styled.BookCardText>
-                <Styled.BookCardText type='available' available={available}>{available ? 'disponibila' : 'imprumutata'}</Styled.BookCardText>
+                <Styled.BookCardText type='price'>{price}RON/day</Styled.BookCardText>
+                <Styled.BookCardText type='available' available={available}>{available ? 'available' : 'borrowed'}</Styled.BookCardText>
             </Styled.BookCardTextWrapper>
         </Styled.BookCardContainer>
     )

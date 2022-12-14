@@ -7,8 +7,14 @@ const Button = (props) => {
 
     return (
         <Styled.ButtonWrapper>
-            <Styled.ButtonComponent btnStyle={btnStyle} onClick={handleClick} selected={selected} disabled={disabled}>
-                <Styled.ButtonText btnStyle={btnStyle}>{text}</Styled.ButtonText>
+            <Styled.ButtonComponent
+                btnStyle={btnStyle}
+                onClick={handleClick}
+                selected={selected}
+                disabled={disabled}>
+                <Styled.ButtonText btnStyle={btnStyle}>
+                    {text}
+                </Styled.ButtonText>
             </Styled.ButtonComponent>
         </Styled.ButtonWrapper>
     )

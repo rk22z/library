@@ -17,7 +17,7 @@ const AddBookForm = () => {
         if (data?.title.length > 0
             && data?.author.length > 0
             && data?.price.length > 0
-            // && data?.ISBN.length === 1
+            && data?.ISBN.length === 13
         ) {
             setDisable(false)
         } else {
@@ -41,36 +41,44 @@ const AddBookForm = () => {
     return (
         <Styled.AddFormContainer>
             <Styled.AddFormInputWrapper >
-                <Styled.AddFormLabel >Titlu carte</Styled.AddFormLabel>
+                <Styled.AddFormLabel >Book title</Styled.AddFormLabel>
                 <Styled.AddFormInput
                     type='text'
                     name='title'
-                    onChange={(event) => handleChange(event)} />
+                    onChange={(event) => handleChange(event)}
+                    placeholder='Title'
+                />
             </Styled.AddFormInputWrapper>
             <Styled.AddFormInputWrapper >
-                <Styled.AddFormLabel >Autor</Styled.AddFormLabel>
+                <Styled.AddFormLabel >Author</Styled.AddFormLabel>
                 <Styled.AddFormInput
                     type='text'
                     name='author'
-                    onChange={(event) => handleChange(event)} />
+                    onChange={(event) => handleChange(event)}
+                    placeholder='Author'
+                />
             </Styled.AddFormInputWrapper>
             <Styled.AddFormInputWrapper >
-                <Styled.AddFormLabel >Pret</Styled.AddFormLabel>
+                <Styled.AddFormLabel >Price</Styled.AddFormLabel>
                 <Styled.AddFormInput
                     type='number'
                     name='price'
-                    onChange={(event) => handleChange(event)} />
+                    onChange={(event) => handleChange(event)}
+                    placeholder='Price'
+                />
             </Styled.AddFormInputWrapper>
             <Styled.AddFormInputWrapper >
                 <Styled.AddFormLabel >ISBN</Styled.AddFormLabel>
                 <Styled.AddFormInput
                     type='number'
                     name='ISBN'
-                    onChange={(event) => handleChange(event)} />
+                    onChange={(event) => handleChange(event)}
+                    placeholder='ISBN (13 digits)'
+                />
             </Styled.AddFormInputWrapper>
             <Styled.ButtonWrapper>
                 <Button
-                    text='Adauga'
+                    text='Add'
                     btnStyle='lightButton'
                     handleClick={() => handleAdd(data)}
                     disabled={disable}

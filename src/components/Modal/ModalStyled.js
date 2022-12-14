@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { COLORS, FONT_FAMILY, FONT_WEIGHT } from '../../constants/variables'
+import { COLORS } from '../../constants/variables'
 
 export const ModalBackdrop = styled.div`
 width: 100%;

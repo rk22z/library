@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import * as Styled from './HomepageStyled'
 
+
+import { useSelector, useDispatch } from 'react-redux'
+import {
+    selectedTab,
+    books,
+    isModalOpen,
+    openModal,
+    closeModal,
+    selectBook,
+    handleModalType,
+} from "../slices/adminSlice";
+import { MODAL_TYPE } from '../constants/variables'
+
+
 import BookCard from '../components/BookCard/BookCard'
 import Modal from '../components/Modal/Modal'
 import ModalContent from '../components/Modal/ModalContent/ModalContent'
-import { useSelector, useDispatch } from 'react-redux'
-import { selectedTab, books, isModalOpen, openModal, closeModal, selectBook, handleModalType } from '../slices/adminSlice'
-import { MODAL_TYPE } from '../constants/variables'
-import SearchBar from '../components/SearchBar/SearchBar'
-import { useMemo } from 'react'
-
 const Homepage = () => {
 
 
@@ -17,7 +25,8 @@ const Homepage = () => {
     const isOpen = useSelector(isModalOpen)
     const booksList = useSelector(books)
     const tab = useSelector(selectedTab)
-    const [searchResult, setSearchResult] = useState([])
+    const [booksArray, setBooksArray] = useState(booksList);
+    const [searchInput, setSearchInput] = useState("");
 
     useEffect(() => {
         const closeOnKeyPress = (event) => {
@@ -29,6 +38,14 @@ const Homepage = () => {
         return () => window.removeEventListener('keydown', closeOnKeyPress)
     }, [])
 
+    useEffect(() => {
+        setBooksArray(booksList);
+        setSearchInput('')
+    }, [booksList]);
+
+    useEffect(() => {
+        handleFilter();
+    }, [tab, searchInput]);
 
     const handleOpen = (book) => {
         dispatch(handleModalType(MODAL_TYPE.book))
@@ -39,36 +56,43 @@ const Homepage = () => {
         dispatch(closeModal())
     }
 
-
-
-    const filteredBook = (tab) => {
-
-        let filteredArray = []
+    const handleFilter = () => {
+        let filteredArray =
+            searchInput?.length === 0
+                ? [...booksList]
+                : booksList.filter((book) => book.title.includes(searchInput)
+                    || book.author.includes(searchInput)
+                    || book.ISBN.includes(searchInput));
         switch (tab) {
-            case 'all':
-                filteredArray = [...booksList]
-                return filteredArray
-            case 'available':
-                filteredArray = booksList.filter((book) => book.available === true)
-                return filteredArray
-            case 'borrowed':
-                filteredArray = booksList.filter((book) => book.available === false)
-                return filteredArray
+            case "all":
+                return setBooksArray(filteredArray);
+            case "available":
+                return setBooksArray(
+                    filteredArray.filter((book) => book.available === true)
+                );
+            case "borrowed":
+                return setBooksArray(
+                    filteredArray.filter((book) => book.available === false)
+                );
             default:
                 break;
         }
-
-        // return filteredArray
-    }
+    };
 
     return (
         <Styled.HomepageContainer>
             <Styled.HeaderContainer>
-                <Styled.Count>{filteredBook(tab).length > 0 && `Rezultate gasite: ${filteredBook(tab).length}`}</Styled.Count>
-                <Styled.SearchBar><SearchBar books={booksList} setSearchResult={setSearchResult} /></Styled.SearchBar>
+                <Styled.Count>{booksArray.length > 0 && `Results found: ${booksArray.length}`}</Styled.Count>
+                <Styled.SearchBarWrapper>
+                    <Styled.SearchBar
+                        type='text'
+                        onChange={(event) => setSearchInput(event.target.value)}
+                        value={searchInput}
+                        placeholder='Search...' />
+                </Styled.SearchBarWrapper>
             </Styled.HeaderContainer>
             <Styled.ContentContainer>
-                {filteredBook(tab)?.map((book, index) => {
+                {booksArray?.map((book, index) => {
                     const { title, author, price, available, ISBN } = book
                     return (
                         <Styled.BookWrapper key={index} onClick={() => handleOpen(book)}>

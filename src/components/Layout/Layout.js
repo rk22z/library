@@ -1,8 +1,10 @@
 import React from 'react'
+
+import * as Styled from './LayoutStyled'
+
 import Header from '../Header/Header'
 import SideMenu from '../SideMenu/SideMenu'
 
-import * as Styled from './LayoutStyled'
 
 const Layout = (props) => {
     const { children } = props

@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { COLORS, FONT_FAMILY, FONT_WEIGHT } from '../../../../constants/variables'
 
 export const BookContainer = styled.div`
@@ -10,7 +10,6 @@ justify-content: space-between;
 align-items: center;
 `
 export const BookDetailsContainer = styled.div`
-/* width: 100%; */
 height: 100%;
 display: flex;
 flex-direction: column;
