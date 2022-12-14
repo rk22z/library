@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { COLORS } from '../../constants/variables'
 
 export const ModalBackdrop = styled.div`

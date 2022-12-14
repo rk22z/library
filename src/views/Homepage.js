@@ -37,6 +37,7 @@ const Homepage = () => {
         }
         window.addEventListener('keydown', closeOnKeyPress)
         return () => window.removeEventListener('keydown', closeOnKeyPress)
+        // eslint-disable-next-line
     }, [])
 
     useEffect(() => {
@@ -46,6 +47,7 @@ const Homepage = () => {
 
     useEffect(() => {
         handleFilter();
+        // eslint-disable-next-line
     }, [tab, searchInput]);
 
     const handleOpen = (book) => {
